@@ -16,28 +16,23 @@
  */
 package com.example.spring.service;
 
-import java.util.Objects;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "/api/greeting", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GreetingController {
 
-    private GreetingProperties properties;
+    @Value("${greeting.message}")
+    private String message;
 
-    @Autowired
-    public GreetingController(GreetingProperties properties) {
-        this.properties = properties;
-    }
-
-    @GetMapping("/api/greeting")
+    @GetMapping
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        Objects.requireNonNull(properties.getMessage(), "Greeting message was not set in the properties");
-
-        String message = String.format(properties.getMessage(), name);
-        return new Greeting(message);
+        return new Greeting(String.format(message, name));
     }
 }

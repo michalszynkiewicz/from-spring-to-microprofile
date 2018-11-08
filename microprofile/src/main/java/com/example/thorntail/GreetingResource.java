@@ -15,18 +15,17 @@
  */
 package com.example.thorntail;
 
-import java.util.Optional;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import java.util.Optional;
 
 @Path("/greeting")
 @Produces(MediaType.APPLICATION_JSON)
@@ -35,16 +34,11 @@ public class GreetingResource {
 
     @Inject
     @ConfigProperty(name = "greeting.message")
-    private Optional<String> message;
+    private String message;
 
     @GET
-    public Response greeting(@QueryParam("name") String name) {
-        String suffix = name != null ? name : "World";
-
-        return message
-                .map(s -> Response.ok().entity(new Greeting(String.format(s, suffix))).build())
-                .orElseGet(() -> Response.status(500).entity("ConfigMap not present").build());
-
+    public Greeting greeting(@QueryParam("name") @DefaultValue("World") String name) {
+        return new Greeting(String.format(message, name));
     }
 
 }
