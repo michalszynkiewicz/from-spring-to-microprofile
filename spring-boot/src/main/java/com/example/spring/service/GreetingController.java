@@ -17,6 +17,7 @@
 package com.example.spring.service;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/greeting", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GreetingController {
 
-    @Value("${greeting.message}")
-    private String message;
+    @Autowired
+    private GreetingGenerator generator;
 
     @GetMapping
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new Greeting(String.format(message, name));
+        return generator.generate(name);
     }
 }

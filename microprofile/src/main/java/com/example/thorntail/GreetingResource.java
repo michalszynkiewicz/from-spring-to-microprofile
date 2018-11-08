@@ -15,8 +15,6 @@
  */
 package com.example.thorntail;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DefaultValue;
@@ -25,7 +23,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.util.Optional;
 
 @Path("/greeting")
 @Produces(MediaType.APPLICATION_JSON)
@@ -33,12 +30,11 @@ import java.util.Optional;
 public class GreetingResource {
 
     @Inject
-    @ConfigProperty(name = "greeting.message")
-    private String message;
+    private GreetingGenerator generator;
 
     @GET
     public Greeting greeting(@QueryParam("name") @DefaultValue("World") String name) {
-        return new Greeting(String.format(message, name));
+        return generator.generate(name);
     }
 
 }
