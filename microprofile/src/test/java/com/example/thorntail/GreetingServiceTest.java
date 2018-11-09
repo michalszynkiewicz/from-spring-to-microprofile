@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Red Hat, Inc, and individual contributors.
+ * Copyright 2018 Red Hat, Inc, and individual contributors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package com.example.thorntail;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -25,9 +24,6 @@ import org.wildfly.swarm.arquillian.DefaultDeployment;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
-/**
- * @author Heiko Braun
- */
 @RunWith(Arquillian.class)
 @DefaultDeployment
 public class GreetingServiceTest {
