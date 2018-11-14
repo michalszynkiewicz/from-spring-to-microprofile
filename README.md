@@ -1,4 +1,4 @@
-# How to migrate a Spring Boot app to MicroProfile        
+# This project is an illustration for the "Eclipse MicroProfile for Spring Boot developers" blog post        
 This repository consists of two projects, one written in Spring Boot - in the `spring-boot` 
 directory and one written in MicroProfile, in the `microprofile` directory
 
